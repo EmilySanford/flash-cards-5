@@ -1,0 +1,19 @@
+{
+  "name": "flash-cards-5",
+  "version": "0.0.0",
+  "homepage": "https://github.com/EmilySanford/flash-cards-5",
+  "authors": [
+    "EmilySanford <emilyannsanford@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "~0.2.15"
+  }
+}

@@ -8,6 +8,7 @@ module.exports = app; // Export it so it can be require('')'d
 
 // The path of our public directory. ([ROOT]/public)
 var publicPath = path.join(__dirname, '../public');
+var bowerPath = path.join(__dirname, '../bower_components')
 
 // The path of our index.html file. ([ROOT]/index.html)
 var indexHtmlPath = path.join(__dirname, '../index.html');
@@ -21,7 +22,9 @@ var indexHtmlPath = path.join(__dirname, '../index.html');
 // When our server gets a request and the url matches
 // something in our public folder, serve up that file
 // e.g. angular.js, style.css
+// app.use(express.static(__dirname));
 app.use(express.static(publicPath));
+app.use(express.static(bowerPath));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -60,6 +63,14 @@ app.post('/cards', function (req, res, next) {
     .then(null, next);
 });
 
+app.get('/cards/:id', function(req, res, next){
+    FlashCardModel.findById(req.params.id).exec()
+    .then(function(card){
+        res.json(card);
+    })
+    .then(null, next); 
+})
+
 app.put('/cards/:id', function (req, res, next) {
     // FlashCardModel.findByIdAndUpdate(req.params.id, req.body).exec()
     // .then(function (updatedCard) {
@@ -76,6 +87,14 @@ app.put('/cards/:id', function (req, res, next) {
     })
     .then(function (updatedCard) {
         res.json(updatedCard);
+    })
+    .then(null, next);
+});
+
+app.delete('/cards/:id', function(req, res, next){
+    FlashCardModel.findByIdAndRemove(req.params.id).exec()
+    .then(function(){
+        res.status(204).end();
     })
     .then(null, next);
 });
